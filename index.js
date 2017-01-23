@@ -1,3 +1,3 @@
 module.exports = function (shipit) {
-  require('./tasks/npm')(shipit);
+  require('./tasks/yarn')(shipit);
 };

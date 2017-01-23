@@ -5,11 +5,11 @@ var Bluebird = require('bluebird');
 var argv = require('yargs').argv;
 
 /**
- * cmd task allows access to any npm cli command
+ * cmd task allows access to any yarn cli command
  */
 
 module.exports = function (gruntOrShipit) {
-  utils.registerTask(gruntOrShipit, 'npm:cmd', task);
+  utils.registerTask(gruntOrShipit, 'yarn:cmd', task);
 
   function task() {
     var shipit = utils.getShipit(gruntOrShipit);
@@ -29,26 +29,26 @@ module.exports = function (gruntOrShipit) {
       if(!argv.cmd) {
         throw new Error(
           shipit.log(
-            chalk.red('Please specify a npm command eg'),
-            chalk.gray('shipit staging npm:init npm:cmd'),
+            chalk.red('Please specify a yarn command eg'),
+            chalk.gray('shipit staging yarn:init yarn:cmd'),
             chalk.white('--cmd "update"')
           )
         );
       }
 
-      shipit.log('Running - ', chalk.blue('npm ', argv.cmd));
+      shipit.log('Running - ', chalk.blue('yarn ', argv.cmd));
 
       return shipit[method](
-        sprintf('cd %s && npm %s', cdPath, argv.cmd)
+        sprintf('cd %s && yarn %s', cdPath, argv.cmd)
       );
 
     }
 
-    if(shipit.npm_inited) {
+    if(shipit.yarn_inited) {
 
-      return cmd(shipit.config.npm.remote)
+      return cmd(shipit.config.yarn.remote)
       .then(function () {
-        shipit.log(chalk.green('Complete - npm ' + argv.cmd));
+        shipit.log(chalk.green('Complete - yarn ' + argv.cmd));
       })
       .catch(function (e) {
         shipit.log(e);
@@ -57,7 +57,7 @@ module.exports = function (gruntOrShipit) {
     }else {
       throw new Error(
         shipit.log(
-          chalk.gray('try running npm:init before npm:cmd')
+          chalk.gray('try running yarn:init before yarn:cmd')
         )
       );
     }

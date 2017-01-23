@@ -1,25 +1,28 @@
-# shipit-npm
+# shipit-yarn
 
-A set of tasks for [Shipit](https://github.com/shipitjs/shipit) used for [npm](https://docs.npmjs.com/) specific tasks on deploy.
+A set of tasks for [Shipit](https://github.com/shipitjs/shipit) used for
+[yarn](https://yarnpkg.com) specific tasks on deploy.
 
-Inspired by the [capistrano/composer](https://github.com/capistrano/composer/) extension.
+Heavily inspired by the [shipit-npm](https://github.com/callerc1/shipit-npm)
+extension by callerc1.
 
 
 **Features:**
 
 - Triggered on the `updated` or `fetched` event from [shipit-deploy](https://github.com/shipitjs/shipit-deploy)
-- Has a direct pass though task to [npm cli](https://docs.npmjs.com/cli)
+- Has a direct pass though task to [yarn cli](https://yarnpkg.com/en/docs/cli/)
 - Works via [shipit-cli](https://github.com/shipitjs/shipit) and [grunt-shipit](https://github.com/shipitjs/grunt-shipit)
 
 ## Install
 
 ```
-npm install shipit-npm
+npm install shipit-yarn
 ```
 
 ## Usage
 
-Just simply run: (This triggers the `npm` task on the deploy `updated` or `fetched` event. No additional config necessary.)
+Run: (This triggers the `yarn` task on the deploy `updated` or
+`fetched` event. No additional config necessary.)
 
 ```
 shipit staging deploy
@@ -29,41 +32,45 @@ shipit staging deploy
 Or you can run the tasks separatly :
 
 ```
-shipit staging npm:init npm:install
-shipit staging npm:run --cmd "update"
+shipit staging yarn:init yarn:install
+shipit staging yarn:run --cmd "update"
 
 ```
 
 
-## Options `shipit.config.npm`
+## Options `shipit.config.yarn`
 
-### `npm.remote`
+### `yarn.remote`
 
 Type: `Boolean`
 Default: `true`
 
-A Boolean to determine whether to run the task in local workspace or on the remote.
+A Boolean to determine whether to run the task in local workspace or on the
+remote.
 
-### `npm.installArgs`
-
-Type: `Array` or `String`
-Default: []
-
-An array or string specifying npm args passed to the [npm install](https://docs.npmjs.com/cli/install) cmd.
-
-### `npm.installFlags`
+### `yarn.installArgs`
 
 Type: `Array` or `String`
 Default: []
 
-An array or string specifying npm flags passed to the [npm install](https://docs.npmjs.com/cli/install) cmd.
+An array or string specifying yarn args passed to the
+[yarn install](https://yarnpkg.com/en/docs/cli/install) cmd.
 
-### `npm.triggerEvent`
+### `yarn.installFlags`
+
+Type: `Array` or `String`
+Default: []
+
+An array or string specifying yarn flags passed to the
+[yarn install](https://yarnpkg.com/en/docs/cli/install) cmd.
+
+### `yarn.triggerEvent`
 
 Type: `String`,`Boolean`
-Default: `updated` or `fetched` (depending on `npm.remote` value)
+Default: `updated` or `fetched` (depending on `yarn.remote` value)
 
-An event name that triggers `npm:install`. Can be set to false to prevent the `npm:install` task from listening to any events.
+An event name that triggers `yarn:install`. Can be set to false to prevent the
+`yarn:install` task from listening to any events.
 
 
 ### Example `shipitfile.js` options usage
@@ -71,14 +78,13 @@ An event name that triggers `npm:install`. Can be set to false to prevent the `n
 ```js
 module.exports = function (shipit) {
   require('shipit-deploy')(shipit);
-  require('shipit-npm')(shipit);
+  require('shipit-yarn')(shipit);
 
   shipit.initConfig({
     default: {
-      npm: {
-        remote: false,
-        installArgs: ['gulp'],
-        installFlags: ['-g']
+      yarn: {
+        remote: true,
+        installFlags: ['--production']
       }
     }
   });
@@ -87,21 +93,24 @@ module.exports = function (shipit) {
 
 ## Workflow tasks
 
-- npm
-  - npm:init
-      - Emit event "npm_inited".
-  - npm:install
-    - Runs npm install (with any Args `npm.installArgs` or Flags `npm.installFlags` defined in options)
-    - Emit event "npm_installed"
-  - npm:run
-      - Runs npm command.
+- yarn
+  - yarn:init
+      - Emit event "yarn_inited".
+  - yarn:install
+    - Runs yarn install (with any Args `yarn.installArgs` or Flags
+      `yarn.installFlags` defined in options)
+    - Emit event "yarn_installed"
+  - yarn:run
+      - Runs yarn command.
 
 ##### Event flow:
 
 - on Event "deploy" (shipit-deploy initialized)
-  - Runs *npm:init*
-  - on Event "npm_inited"
-    - Runs *npm:install* (Triggered on the `updated` or `fetched` event from [shipit-deploy](https://github.com/shipitjs/shipit-deploy) or by a custom `npm.triggerEvent` as mentioned above.)
+  - Runs *yarn:init*
+  - on Event "yarn_inited"
+    - Runs *yarn:install* (Triggered on the `updated` or `fetched` event from
+      [shipit-deploy](https://github.com/shipitjs/shipit-deploy) or by a custom
+      `yarn.triggerEvent` as mentioned above.)
 
 ## License
 

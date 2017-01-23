@@ -1,3 +1,3 @@
 module.exports = function (grunt) {
-  require('./npm')(grunt);
+  require('./yarn')(grunt);
 };
