@@ -26,7 +26,6 @@ Run: (This triggers the `yarn` task on the deploy `updated` or
 
 ```
 shipit staging deploy
-
 ```
 
 Or you can run the tasks separatly :
@@ -34,7 +33,6 @@ Or you can run the tasks separatly :
 ```
 shipit staging yarn:init yarn:install
 shipit staging yarn:run --cmd "update"
-
 ```
 
 
@@ -84,7 +82,7 @@ This is particularly useful when yarn is not available on all servers.
 ### `yarn.cmd`
 
 Type: `String`
-Default: ''
+Default: `''` (empty string)
 
 A string specifying the command to be run by the 
 [yarn:cmd](https://github.com/clement-escolano/shipit-yarn#workflow-tasks) 
