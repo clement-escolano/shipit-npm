@@ -645,9 +645,9 @@ set-blocking@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/set-blocking/-/set-blocking-2.0.0.tgz#045f9782d011ae9a6803ddd382b24392b3d890f7"
 
-shipit-cli@^1.1.0:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/shipit-cli/-/shipit-cli-1.5.2.tgz#a5708e0a5d61b6bc1a6b6e3eecae54dc646c854a"
+shipit-cli@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/shipit-cli/-/shipit-cli-2.0.0.tgz#648350d5566a5a9e020a5aa36099516de62cdf5a"
   dependencies:
     bluebird "^3.3.4"
     chalk "^1.0.0"
