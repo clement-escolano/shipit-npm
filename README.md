@@ -81,6 +81,15 @@ Default: `false`
 A Boolean to determine whether the npm command should be used instead of yarn.
 This is particularly useful when yarn is not available on all servers.
 
+### `yarn.cmd`
+
+Type: `String`
+Default: ''
+
+A string specifying the command to be run by the 
+[yarn:cmd](https://github.com/clement-escolano/shipit-yarn#workflow-tasks) 
+task (e.g. `'run build'`) **overridden if the `--cmd` argument is set on the command line**.
+
 
 ### Example `shipitfile.js` options usage
 

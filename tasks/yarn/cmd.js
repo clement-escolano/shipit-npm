@@ -27,12 +27,19 @@ module.exports = function (gruntOrShipit) {
         );
       }
 
+        if (!argv.cmd && shipit.config.yarn) {
+          argv.cmd = shipit.config.yarn.cmd;
+        }
+
       if(!argv.cmd) {
         throw new Error(
           shipit.log(
             chalk.red('Please specify a yarn command eg'),
             chalk.gray('shipit staging yarn:init yarn:cmd'),
-            chalk.white('--cmd "update"')
+            chalk.white('--cmd "update"'),
+            chalk.red('\nor'),
+            chalk.gray('(in your shipitfile)'),
+            chalk.white('yarn: { cmd: \'run build\' }')
           )
         );
       }
