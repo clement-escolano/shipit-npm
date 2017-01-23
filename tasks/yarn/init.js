@@ -17,6 +17,7 @@ module.exports = function (gruntOrShipit) {
     shipit.config.yarn.remote = shipit.config.yarn.remote !== false;
     shipit.config.yarn.installArgs = shipit.config.yarn.installArgs || [];
     shipit.config.yarn.installFlags = shipit.config.yarn.installFlags || [];
+    shipit.config.yarn.useNpm = shipit.config.yarn.useNpm || false;
 
     var triggerEvent = shipit.config.yarn.remote ? 'updated' : 'fetched';
     shipit.config.yarn.triggerEvent = shipit.config.yarn.triggerEvent !== undefined ? shipit.config.yarn.triggerEvent : triggerEvent;

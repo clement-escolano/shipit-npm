@@ -18,6 +18,7 @@ module.exports = function (gruntOrShipit) {
 
       var method = remote ? 'remote' : 'local';
       var cdPath = remote ? shipit.releasePath || shipit.currentPath : shipit.config.workspace;
+      var yarnCommand = shipit.config.yarn.useNpm ? 'npm' : 'yarn';
 
       if(!cdPath) {
         var msg = remote ? 'Please specify a deploy to path (shipit.config.deployTo)' : 'Please specify a workspace (shipit.config.workspace)';
@@ -39,7 +40,7 @@ module.exports = function (gruntOrShipit) {
       shipit.log('Running - ', chalk.blue('yarn ', argv.cmd));
 
       return shipit[method](
-        sprintf('cd %s && yarn %s', cdPath, argv.cmd)
+        sprintf('cd %s && %s %s', cdPath, yarnCommand, argv.cmd)
       );
 
     }

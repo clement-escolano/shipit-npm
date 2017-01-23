@@ -16,7 +16,7 @@ extension by callerc1.
 ## Install
 
 ```
-npm install shipit-yarn
+npm install shipit-yarn --save-dev
 ```
 
 ## Usage
@@ -71,6 +71,15 @@ Default: `updated` or `fetched` (depending on `yarn.remote` value)
 
 An event name that triggers `yarn:install`. Can be set to false to prevent the
 `yarn:install` task from listening to any events.
+[yarn install](https://yarnpkg.com/en/docs/cli/install) cmd.
+
+### `yarn.useNpm`
+
+Type: `Boolean`
+Default: `false`
+
+A Boolean to determine whether the npm command should be used instead of yarn.
+This is particularly useful when yarn is not available on all servers.
 
 
 ### Example `shipitfile.js` options usage
