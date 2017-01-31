@@ -8,27 +8,26 @@ var utils = require('shipit-utils');
  */
 
 module.exports = function (gruntOrShipit) {
-  var shipit = utils.getShipit(gruntOrShipit);
+    var shipit = utils.getShipit(gruntOrShipit);
 
-  require('./init')(gruntOrShipit);
-  require('./install')(gruntOrShipit);
-  require('./cmd')(gruntOrShipit);
+    require('./init')(gruntOrShipit);
+    require('./install')(gruntOrShipit);
+    require('./cmd')(gruntOrShipit);
 
-  utils.registerTask(gruntOrShipit, 'yarn:run', [
-    'yarn:init',
-    'yarn:cmd'
-  ]);
+    utils.registerTask(gruntOrShipit, 'yarn:run', [
+        'yarn:init',
+        'yarn:cmd'
+    ]);
 
-  shipit.on('deploy', function () {
-    shipit.start('yarn:init');
+    shipit.on('deploy', function () {
+        shipit.start('yarn:init');
 
-    shipit.on('yarn_inited', function () {
-      if (shipit.config.yarn.triggerEvent) {
-        shipit.on(shipit.config.yarn.triggerEvent, function () {
-          shipit.start('yarn:install');
+        shipit.on('yarn_inited', function () {
+            if (shipit.config.yarn.triggerEvent) {
+                shipit.on(shipit.config.yarn.triggerEvent, function () {
+                    shipit.start('yarn:install');
+                });
+            }
         });
-      }
     });
-
-  });
 };

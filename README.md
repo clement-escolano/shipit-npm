@@ -4,19 +4,19 @@ A set of tasks for [Shipit](https://github.com/shipitjs/shipit) used for
 [yarn](https://yarnpkg.com) specific tasks on deploy.
 
 Heavily inspired by the [shipit-npm](https://github.com/callerc1/shipit-npm)
-extension by callerc1.
+extension by callerc1. It started as a fork of his repository.
 
 
 **Features:**
 
 - Triggered on the `updated` or `fetched` event from [shipit-deploy](https://github.com/shipitjs/shipit-deploy)
-- Has a direct pass though task to [yarn cli](https://yarnpkg.com/en/docs/cli/)
+- Has a direct pass through task to [yarn cli](https://yarnpkg.com/en/docs/cli/)
 - Works via [shipit-cli](https://github.com/shipitjs/shipit) and [grunt-shipit](https://github.com/shipitjs/grunt-shipit)
 
 ## Install
 
 ```
-npm install shipit-yarn --save-dev
+npm install shipit-yarn --save-dev    # or yarn add -D shipit-yarn
 ```
 
 ## Usage
