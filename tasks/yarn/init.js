@@ -1,5 +1,6 @@
 var utils = require('shipit-utils');
 var path = require('path');
+var chalk = require('chalk');
 
 /**
  * Init task.
@@ -8,6 +9,36 @@ var path = require('path');
 
 module.exports = function (gruntOrShipit) {
     utils.registerTask(gruntOrShipit, 'yarn:init', task);
+
+    function initYarnOrNpm(command) {
+        var shipit = utils.getShipit(gruntOrShipit);
+
+        shipit.log(chalk.green("Chosen package manager:", command));
+        shipit.config.yarn.command = command;
+        shipit.yarn_inited = true;
+        shipit.emit('yarn_inited');
+    }
+
+    function checkCommand(method, command, onError) {
+        var shipit = utils.getShipit(gruntOrShipit);
+
+        return shipit[method]('command -v ' + command + ' >/dev/null 2>&1')
+            .then(function () { initYarnOrNpm(command); })
+            .catch(onError);
+    }
+
+    function findBestCommand(method) {
+        var shipit = utils.getShipit(gruntOrShipit);
+        shipit.log(chalk.blue('Checking best available package manager on', method));
+
+        return checkCommand(method, 'yarn', function () {
+            return checkCommand(method, 'npm', function () {
+                throw new Error(
+                    shipit.log(chalk.red('Neither Yarn nor NPM is installed on', method))
+                );
+            });
+        });
+    }
 
     function task() {
         var shipit = utils.getShipit(gruntOrShipit);
@@ -21,12 +52,18 @@ module.exports = function (gruntOrShipit) {
         shipit.config.yarn.remote = shipit.config.yarn.remote !== false;
         shipit.config.yarn.installArgs = shipit.config.yarn.installArgs || [];
         shipit.config.yarn.installFlags = shipit.config.yarn.installFlags || [];
-        shipit.config.yarn.useNpm = shipit.config.yarn.useNpm || false;
 
         var triggerEvent = shipit.config.yarn.remote ? 'updated' : 'fetched';
         shipit.config.yarn.triggerEvent = shipit.config.yarn.triggerEvent !== undefined ? shipit.config.yarn.triggerEvent : triggerEvent;
 
-        shipit.yarn_inited = true;
-        shipit.emit('yarn_inited');
+        var method = shipit.config.yarn.remote ? 'remote' : 'local';
+
+        shipit.config.yarn.yarnOrNpm = shipit.config.yarn.yarnOrNpm || 'yarn';
+
+        if (shipit.config.yarn.yarnOrNpm !== 'best') {
+            return initYarnOrNpm(shipit.config.yarn.yarnOrNpm);
+        }
+
+        return findBestCommand(method);
     }
 };

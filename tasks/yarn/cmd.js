@@ -15,7 +15,7 @@ module.exports = function (gruntOrShipit) {
         function cmd(remote) {
             var method = remote ? 'remote' : 'local';
             var cdPath = remote ? shipit.releasePath || shipit.currentPath : shipit.config.workspace;
-            var yarnCommand = shipit.config.yarn.useNpm ? 'npm' : 'yarn';
+            var yarnOrNpm = shipit.config.yarn.command;
 
             if (!cdPath) {
                 var msg = remote
@@ -43,9 +43,9 @@ module.exports = function (gruntOrShipit) {
                 );
             }
 
-            shipit.log('Running -', chalk.blue('yarn', argv.cmd));
+            shipit.log('Running -', chalk.blue(yarnOrNpm, argv.cmd));
 
-            var command = 'cd ' + cdPath + ' && ' + yarnCommand + ' ' + argv.cmd;
+            var command = 'cd ' + cdPath + ' && ' + yarnOrNpm + ' ' + argv.cmd;
 
             return shipit[method](command);
         }
@@ -53,7 +53,7 @@ module.exports = function (gruntOrShipit) {
         if (shipit.yarn_inited) {
             return cmd(shipit.config.yarn.remote)
                 .then(function () {
-                    shipit.log('Complete -', chalk.green('yarn', argv.cmd));
+                    shipit.log('Complete -', chalk.green(shipit.config.yarn.command, argv.cmd));
                 })
                 .catch(function (e) {
                     shipit.log(chalk.red(e));

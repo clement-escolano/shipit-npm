@@ -71,13 +71,13 @@ An event name that triggers `yarn:install`. Can be set to false to prevent the
 `yarn:install` task from listening to any events.
 [yarn install](https://yarnpkg.com/en/docs/cli/install) cmd.
 
-### `yarn.useNpm`
+### `yarn.yarnOrNpm`
 
-Type: `Boolean`
-Default: `false`
+Type: `String`
+Default: `yarn`
 
-A Boolean to determine whether the npm command should be used instead of yarn.
-This is particularly useful when yarn is not available on all servers.
+Determine which package manager should be used. Can be `yarn`, `npm` or `best` (try with yarn and fallback to npm if
+yarn is unavailable).
 
 ### `yarn.cmd`
 

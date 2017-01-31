@@ -16,7 +16,7 @@ module.exports = function (gruntOrShipit) {
             shipit.log('Installing npm modules.');
             var method = remote ? 'remote' : 'local';
             var cdPath = remote ? shipit.releasePath || shipit.currentPath : shipit.config.workspace;
-            var yarnCommand = shipit.config.yarn.useNpm ? 'npm' : 'yarn';
+            var yarnOrNpm = shipit.config.yarn.command;
 
             if (!cdPath) {
                 var msg = remote
@@ -31,7 +31,7 @@ module.exports = function (gruntOrShipit) {
             var flags = Array.isArray(shipit.config.yarn.installFlags) ? shipit.config.yarn.installFlags.join(' ') : shipit.config.yarn.installFlags;
             var AF = args ? flags ? args.concat(' ', flags) : args : flags ? flags : '';
 
-            var command = 'node -v && cd ' + cdPath + ' && ' + yarnCommand + ' install ' + AF;
+            var command = 'node -v && cd ' + cdPath + ' && ' + yarnOrNpm + ' install ' + AF;
 
             return shipit[method](command);
         }
@@ -39,7 +39,7 @@ module.exports = function (gruntOrShipit) {
         if (shipit.yarn_inited) {
             return install(shipit.config.yarn.remote)
                 .then(function () {
-                    shipit.log(chalk.green('yarn install complete'));
+                    shipit.log(chalk.green(shipit.config.yarn.command, 'install complete'));
                 })
                 .then(function () {
                     shipit.emit('yarn_installed')
